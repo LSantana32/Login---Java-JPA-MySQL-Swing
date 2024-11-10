@@ -3,12 +3,9 @@ package com.github.lsantana32.loginjpa.persistence;
 import com.github.lsantana32.loginjpa.logic.User;
 import com.github.lsantana32.loginjpa.persistence.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.sql.Statement;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -119,7 +116,25 @@ public class UserJpaController implements Serializable {
             em.close();
         }
     }
-
+    
+    public User findUserWithUserName(String username)throws NoResultException {
+        EntityManager em = getEntityManager();
+        try {
+            //create a query with SQL
+            Query q= em.createQuery("SELECT u FROM User u WHERE u.username= :username");
+            //set username parameter
+            q.setParameter("username", username);
+            //save the result in a Object class. The column "username" is unique, so not have 2 users with the same username
+            Object o = q.getSingleResult();
+            //return the result of the query, converting this from an Object class to a User Class  
+            return (User) o;
+        }catch (NoResultException e){
+            throw e;
+        }finally {
+            em.close();
+        }
+    }
+  
     public int getUserCount() {
         EntityManager em = getEntityManager();
         try {

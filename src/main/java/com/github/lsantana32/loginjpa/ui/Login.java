@@ -151,11 +151,11 @@ public class Login extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String user = txtUser.getText();
         String password = String.valueOf(txtPassword.getPassword());
-        try{
-            lc.validateUser(user,password);
-            txtMsg.setText("Welcome "+ user);
-        }catch (Exception e){
-            txtMsg.setText("An error has occurred");
+        if (!user.isEmpty() && !password.isEmpty()){
+            String message = lc.validateUser(user,password);
+            txtMsg.setText(message);
+        }else{
+            txtMsg.setText("Please complete both fields before clicking Login");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 

@@ -6,12 +6,12 @@ public class LogicController {
 
     PersistenceController pc = new PersistenceController();
     
-    public void validateUser(String userName, String password) {
+    public String validateUser(String userName, String password) {
         User user = new User();
-        user.setNameUser(userName);
+        user.setUsername(userName);
         user.setPassword(password);
         
-        pc.validateUser(user);
+        return pc.validateUser(user);
     }
     
 }

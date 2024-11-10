@@ -1,6 +1,7 @@
 package com.github.lsantana32.loginjpa.logic;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,14 +14,16 @@ public class User implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
-    private String nameUser;
+    @Column(unique=true)
+    private String username;
+    
     private String password;
     
     public User(){}
     
-    public User(int id, String nameUser, String password){
+    public User(int id, String username, String password){
         this.id = id;
-        this.nameUser = nameUser;
+        this.username = username;
         this.password= password;
     }
 
@@ -32,12 +35,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getNameUser() {
-        return nameUser;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNameUser(String nameUser) {
-        this.nameUser = nameUser;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
